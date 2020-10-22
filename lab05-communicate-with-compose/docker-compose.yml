@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  hello-world-api:
+    image: hello-world-api:0.0.1
+    container_name: hello-world-api
+    build:
+      context: helloworld
+      dockerfile: Dockerfile
+    environment:
+      TIME_SERVER: time-api
+    ports:
+      - '8080:8080'
+
+  time-api:
+    image: time-api:0.0.1
+    container_name: time-api
+    build:
+      context: time
+      dockerfile: Dockerfile
+    environment:
+      PORT: 8000
+    ports:
+      - '8000:8000'

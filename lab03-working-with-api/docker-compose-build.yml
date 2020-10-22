@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+    store-service:
+      build: .
+      ports:
+          - "2525:2525"
+          - "8000:8000"
+      volumes:
+          - ./imposters:/imposters
