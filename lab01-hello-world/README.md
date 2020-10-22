@@ -19,11 +19,11 @@ docker container ls -a
 ## Run with -d
 
 ```sh
-docker container run boyone:hello-world
+docker container run boyone/hello-world
 ```
 
 ```sh
-docker container run -d boyone:hello-world
+docker container run -d boyone/hello-world
 ```
 
 ```sh
@@ -59,7 +59,7 @@ docker container prune
 ## Docker Create Your Own Image with Tag
 
 ```sh
-docker container run -d boyone:hello-world
+docker container run -d boyone/hello-world
 ```
 
 ```sh
@@ -82,7 +82,7 @@ docker login
 - Push Image to hub.docker.com
 
 ```sh
-docker image push image_name:tag
+docker image push username/image_name:tag
 ```
 
 ## Remove All Images
@@ -99,5 +99,5 @@ docker container run image_name
 
 ## Artifacts: <name>/image_name:tags
 
-- name/hello-world:0.0.1
-- name/hello-world:0.0.2
+- username/hello-world:0.0.1
+- username/hello-world:0.0.2
