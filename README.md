@@ -2,7 +2,7 @@
 
 ## Day 1: Hello Docker, Nice to meet you
 
-1. Problem of software testing
+1. Problem of Software Testing
 
    - [Test Pyramid](https://martinfowler.com/articles/practical-test-pyramid.html)
    - Pain Point
@@ -16,9 +16,9 @@
      - Unit
      - Integration
      - Contract
-     - UI/API
-     - End-to-End
-     - Acceptance
+     - **_UI/API_**
+     - **_End-to-End_**
+     - **_Acceptance_**
      - Exploratory
    - The Confusion About Testing Terminology
    - Putting Tests Into Your Deployment Pipeline
@@ -26,15 +26,33 @@
    - Writing Clean Test Code
    - Conclusion\*\*\*
 
-2. How to solve it by using Docker
+2. Several Specific Benefits of Containers
+
+   - What is Container?
+   - Language Flexibility
+
+     service A jdk8, service B jdk7, service C go1.5
+
+   - Isolation Without Overhead
+
+     light weight
+
+   - Developer Efficiency
+
+     Isolating Dependencies(libs, configuration)
+
+   - Reproducibility
+
+     Containers make it easier to reproduce your application environment.
+
 3. On local machine
 
-   - Install Docker
+   - Install Docker and Editor
      1. [get-docker](https://docs.docker.com/get-docker/)
-     2. [install windows home](https://docs.docker.com/docker-for-windows/install-windows-home/)
-     - [WSL2](https://docs.docker.com/docker-for-windows/wsl/) must be installed before you can install and use Docker.
+     2. [install windows home](https://docs.docker.com/docker-for-windows/install-windows-home/)  
+        [WSL2](https://docs.docker.com/docker-for-windows/wsl/) must be installed before you can install and use Docker.
      3. Install VSCode & Docker Plugin
-   - Hello World
+   - Hello World Docker
 
      ```sh
      docker run hello-world
@@ -52,46 +70,45 @@
      - The container is running.
 
    - Basic Docker commands
-     > lab 01. Create Docker Image from Scratch
      - run, ls, rm, ps, start, stop, help
    - Docker Image
    - Docker Container
    - Create Your own Docker Image:
+     > [lab 01. Create Docker Image from Scratch](lab01-hello-world/README.md)
      - Modify, Commit, and Tag
      - Sign Up [https://hub.docker.com](https://hub.docker.com)
      - Push Image to hub.docker.com
      - Pull and Run
    - Dockerfile
-     > lab 02. Create Docker Image by Dockerfile
+     > [lab 02. Create Docker Image from Dockerfile](lab02-create-docker-image-from-Dockerfile/README.md)
      - [Reference](https://docs.docker.com/engine/reference/builder/)
        - FROM, COPY, RUN, CMD, ENTRYPOINT
      - [Dockerfile best practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
      - Modify, Build + Tag, Push
      - Pull and Run
-   - [ ] Git + Dockerfile + Image tag
 
-4. On local machine (Running other person implementation) 03
+4. On local machine (Running other person implementation)
 
-   > lab 03. Provide Http API Service via Container
+   > [lab 03. Provide Http API Service via Container](lab03-working-with-api/README.md)
 
    - Pull docker images to run API testing
    - Bind port
    - Run
    - Mount disk volume
 
-5. docker-compose(intro) 03
+5. docker-compose(intro)
 
-   > lab 03. Start Http API Service via docker-compose
+   > [lab 03. Start Http API Service via docker-compose](lab03-working-with-api/README.md)
 
    - One service(Store Service)
    - Command: Up/Down
 
 6. Running Frontend and Backend Service without docker-compose
-   > lab 04. communicate via host network
+   > [lab 04. Communicate via Host Network](lab04-communicate-to-other-containers-via-host-network/README.md)
    - Hello, World API v.1
    - Time API(dependency)
 7. Running Frontend and Backend Service with docker-compose
-   > lab 05. communicate via docker network
+   > [lab 05. Communicate via Docker Network](lab05-communicate-via-docker-compose/README.md)
    - Hello, World API v.1
    - Time API(dependency)
 
