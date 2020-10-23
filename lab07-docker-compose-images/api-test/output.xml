@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.2.2 (Python 3.8.6 on darwin)" generated="20201023 17:06:21.112" rpa="false">
+<suite id="s1" name="Api-Test" source="/Users/boyone/workspaces/sck/docker-for-testers/lab07-docker-compose-images/api-test">
+<suite id="s1-s1" name="Checkout-Success-Template" source="/Users/boyone/workspaces/sck/docker-for-testers/lab07-docker-compose-images/api-test/checkout-success-template.robot">
+<kw name="Create Session" library="RequestsLibrary" type="setup">
+<doc>Create Session: create a HTTP session to a server</doc>
+<arguments>
+<arg>${toy_store}</arg>
+<arg>${URL}</arg>
+</arguments>
+<msg timestamp="20201023 17:06:21.192" level="INFO">Creating Session using : alias=, url=http://localhost:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20201023 17:06:21.192" endtime="20201023 17:06:21.193"></status>
+</kw>
+<test id="s1-s1-t1" name="Diner Set">
+<kw name="Checkout Product">
+<arguments>
+<arg>43 Piece dinner Set</arg>
+<arg>1</arg>
+<arg>14.95</arg>
+<arg>วันเวลาที่ชำระเงิน 1/3/2020 13:30:00 หมายเลขคำสั่งซื้อ \${order_id} คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข 1785261900</arg>
+</arguments>
+<kw name="Get Product List">
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>${toy_store}</arg>
+<arg>/mockTime/01032020T13:30:00</arg>
+</arguments>
+<msg timestamp="20201023 17:06:21.206" level="INFO">GET Request : url=http://localhost:8000/mockTime/01032020T13:30:00 
+ path_url=/mockTime/01032020T13:30:00 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20201023 17:06:21.206" level="INFO">GET Response : url=http://localhost:8000/mockTime/01032020T13:30:00 
+ status=200, reason=OK 
+ body={"fixTime":"2020-03-01T13:30:00Z","status":"ok"}
+ 
+ </msg>
+<status status="PASS" starttime="20201023 17:06:21.194" endtime="20201023 17:06:21.206"></status>
+</kw>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>${toy_store}</arg>
+<arg>/api/v1/product</arg>
+<arg>headers=&amp;{ACCEPT}</arg>
+</arguments>
+<assign>
+<var>${productList}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.214" level="INFO">GET Request : url=http://localhost:8000/api/v1/product 
+ path_url=/api/v1/product 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20201023 17:06:21.214" level="INFO">GET Response : url=http://localhost:8000/api/v1/product 
+ status=200, reason=OK 
+ body={"total":2,"products":[{"id":1,"product_name":"Balance Training Bicycle","product_price":119.95,"product_image":"/Balance_Training_Bicycle.png"},{"id":2,"product_name":"43 Piece dinner Set","product_price":12.95,"product_image":"/43_Piece_dinner_Set.png"}]}
+ 
+ </msg>
+<msg timestamp="20201023 17:06:21.214" level="INFO">${productList} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20201023 17:06:21.206" endtime="20201023 17:06:21.214"></status>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<doc>Fails if response status code is different than the expected.</doc>
+<arguments>
+<arg>200</arg>
+<arg>${productList}</arg>
+</arguments>
+<status status="PASS" starttime="20201023 17:06:21.214" endtime="20201023 17:06:21.215"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${productList.json()["total"]}</arg>
+<arg>${2}</arg>
+</arguments>
+<status status="PASS" starttime="20201023 17:06:21.215" endtime="20201023 17:06:21.215"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${productList.json()}</arg>
+<arg>products</arg>
+</arguments>
+<assign>
+<var>${products}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.216" level="INFO">${products} = [{'id': 1, 'product_name': 'Balance Training Bicycle', 'product_price': 119.95, 'product_image': '/Balance_Training_Bicycle.png'}, {'id': 2, 'product_name': '43 Piece dinner Set', 'product_price': 12....</msg>
+<status status="PASS" starttime="20201023 17:06:21.215" endtime="20201023 17:06:21.216"></status>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<arguments>
+<arg>${products}</arg>
+<arg>${products}</arg>
+</arguments>
+<msg timestamp="20201023 17:06:21.216" level="INFO">${products} = [{'id': 1, 'product_name': 'Balance Training Bicycle', 'product_price': 119.95, 'product_image': '/Balance_Training_Bicycle.png'}, {'id': 2, 'product_name': '43 Piece dinner Set', 'product_price': 12....</msg>
+<status status="PASS" starttime="20201023 17:06:21.216" endtime="20201023 17:06:21.216"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.193" endtime="20201023 17:06:21.216"></status>
+</kw>
+<kw name="Find Product by Name">
+<arguments>
+<arg>${product_name}</arg>
+</arguments>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${0}</arg>
+</arguments>
+<assign>
+<var>${id}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.217" level="INFO">${id} = 0</msg>
+<status status="PASS" starttime="20201023 17:06:21.217" endtime="20201023 17:06:21.217"></status>
+</kw>
+<kw name="${product} IN [ @{products} ]" type="for">
+<kw name="${product} = {'id': 1, 'product_name': 'Balance Training Bicycle', 'product_price': 119.95, 'product_image': '/Balance_Training_Bicycle.png'}" type="foritem">
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${product["id"]}</arg>
+</arguments>
+<assign>
+<var>${id}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.218" level="INFO">${id} = 1</msg>
+<status status="PASS" starttime="20201023 17:06:21.217" endtime="20201023 17:06:21.218"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${product["product_name"]}' == '${product_name}'</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<status status="PASS" starttime="20201023 17:06:21.218" endtime="20201023 17:06:21.218"></status>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${0}</arg>
+</arguments>
+<assign>
+<var>${id}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.218" level="INFO">${id} = 0</msg>
+<status status="PASS" starttime="20201023 17:06:21.218" endtime="20201023 17:06:21.218"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.217" endtime="20201023 17:06:21.218"></status>
+</kw>
+<kw name="${product} = {'id': 2, 'product_name': '43 Piece dinner Set', 'product_price': 12.95, 'product_image': '/43_Piece_dinner_Set.png'}" type="foritem">
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${product["id"]}</arg>
+</arguments>
+<assign>
+<var>${id}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.219" level="INFO">${id} = 2</msg>
+<status status="PASS" starttime="20201023 17:06:21.219" endtime="20201023 17:06:21.219"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${product["product_name"]}' == '${product_name}'</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing for loop.</doc>
+<msg timestamp="20201023 17:06:21.219" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20201023 17:06:21.219" endtime="20201023 17:06:21.220"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.219" endtime="20201023 17:06:21.220"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.219" endtime="20201023 17:06:21.220"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.217" endtime="20201023 17:06:21.220"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>${id} != 0</arg>
+<arg>product id should not equal 0</arg>
+</arguments>
+<status status="PASS" starttime="20201023 17:06:21.220" endtime="20201023 17:06:21.220"></status>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<arguments>
+<arg>${product_id}</arg>
+<arg>${id}</arg>
+</arguments>
+<msg timestamp="20201023 17:06:21.221" level="INFO">${product_id} = 2</msg>
+<status status="PASS" starttime="20201023 17:06:21.220" endtime="20201023 17:06:21.221"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.216" endtime="20201023 17:06:21.221"></status>
+</kw>
+<kw name="Get Product Detail">
+<arguments>
+<arg>${product_name}</arg>
+</arguments>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>${toy_store}</arg>
+<arg>/api/v1/product/${product_id}</arg>
+<arg>headers=&amp;{ACCEPT}</arg>
+</arguments>
+<assign>
+<var>${productDetail}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.227" level="INFO">GET Request : url=http://localhost:8000/api/v1/product/2 
+ path_url=/api/v1/product/2 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20201023 17:06:21.227" level="INFO">GET Response : url=http://localhost:8000/api/v1/product/2 
+ status=200, reason=OK 
+ body={"id":2,"product_name":"43 Piece dinner Set","product_price":12.95,"product_image":"/43_Piece_dinner_Set.png","quantity":10,"product_brand":"CoolKidz"}
+ 
+ </msg>
+<msg timestamp="20201023 17:06:21.227" level="INFO">${productDetail} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20201023 17:06:21.222" endtime="20201023 17:06:21.228"></status>
+</kw>
+<kw name="Request Should Be Successful" library="RequestsLibrary">
+<doc>Fails if response status code is a client or server error (4xx, 5xx).</doc>
+<arguments>
+<arg>${productDetail}</arg>
+</arguments>
+<status status="PASS" starttime="20201023 17:06:21.228" endtime="20201023 17:06:21.228"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${productDetail.json()["product_name"]}</arg>
+<arg>${product_name}</arg>
+</arguments>
+<status status="PASS" starttime="20201023 17:06:21.228" endtime="20201023 17:06:21.229"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.221" endtime="20201023 17:06:21.229"></status>
+</kw>
+<kw name="Order Product">
+<arguments>
+<arg>${quantity}</arg>
+<arg>${total_price}</arg>
+</arguments>
+<kw name="Replace Variables" library="BuiltIn">
+<doc>Replaces variables in the given text with their current values.</doc>
+<arguments>
+<arg>${ORDER_TEMPLATE}</arg>
+</arguments>
+<assign>
+<var>${message}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.230" level="INFO">${message} = { "cart":[{ "product_id": 2, "quantity": 1 }], "shipping_method": "Kerry", "shipping_address": "405/37 ถ.มหิดล", "shipping_sub_district": "ท่าศาลา", "shipping_district": "เมือง", "shipping_province": ...</msg>
+<status status="PASS" starttime="20201023 17:06:21.229" endtime="20201023 17:06:21.230"></status>
+</kw>
+<kw name="To Json" library="RequestsLibrary">
+<doc>Convert a string to a JSON object</doc>
+<arguments>
+<arg>${message}</arg>
+</arguments>
+<assign>
+<var>${order}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.230" level="INFO">To JSON using : content={ "cart":[{ "product_id": 2, "quantity": 1 }], "shipping_method": "Kerry", "shipping_address": "405/37 ถ.มหิดล", "shipping_sub_district": "ท่าศาลา", "shipping_district": "เมือง", "shipping_province": "เชียงใหม่", "shipping_zip_code": "50000", "recipient_name": "ณัฐญา ชุติบุตร", "recipient_phone_number": "0970809292" } </msg>
+<msg timestamp="20201023 17:06:21.230" level="INFO">To JSON using : pretty_print=False </msg>
+<msg timestamp="20201023 17:06:21.230" level="INFO">${order} = {'cart': [{'product_id': 2, 'quantity': 1}], 'shipping_method': 'Kerry', 'shipping_address': '405/37 ถ.มหิดล', 'shipping_sub_district': 'ท่าศาลา', 'shipping_district': 'เมือง', 'shipping_province': 'เ...</msg>
+<status status="PASS" starttime="20201023 17:06:21.230" endtime="20201023 17:06:21.230"></status>
+</kw>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>${toy_store}</arg>
+<arg>/api/v1/order</arg>
+<arg>json=${order}</arg>
+<arg>headers=&amp;{POST_HEADERS}</arg>
+</arguments>
+<assign>
+<var>${orderStatus}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.241" level="INFO">POST Request : url=http://localhost:8000/api/v1/order 
+ path_url=/api/v1/order 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '516'} 
+ body=b'{"cart": [{"product_id": 2, "quantity": 1}], "shipping_method": "Kerry", "shipping_address": "405/37 \\u0e16.\\u0e21\\u0e2b\\u0e34\\u0e14\\u0e25", "shipping_sub_district": "\\u0e17\\u0e48\\u0e32\\u0e28\\u0e32\\u0e25\\u0e32", "shipping_district": "\\u0e40\\u0e21\\u0e37\\u0e2d\\u0e07", "shipping_province": "\\u0e40\\u0e0a\\u0e35\\u0e22\\u0e07\\u0e43\\u0e2b\\u0e21\\u0e48", "shipping_zip_code": "50000", "recipient_name": "\\u0e13\\u0e31\\u0e10\\u0e0d\\u0e32 \\u0e0a\\u0e38\\u0e15\\u0e34\\u0e1a\\u0e38\\u0e15\\u0e23", "recipient_phone_number": "0970809292"}' 
+ </msg>
+<msg timestamp="20201023 17:06:21.241" level="INFO">POST Response : url=http://localhost:8000/api/v1/order 
+ status=200, reason=OK 
+ body={"order_id":8004359104,"total_price":14.95}
+ 
+ </msg>
+<msg timestamp="20201023 17:06:21.241" level="INFO">${orderStatus} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20201023 17:06:21.230" endtime="20201023 17:06:21.241"></status>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<doc>Fails if response status code is different than the expected.</doc>
+<arguments>
+<arg>200</arg>
+<arg>${orderStatus}</arg>
+</arguments>
+<status status="PASS" starttime="20201023 17:06:21.241" endtime="20201023 17:06:21.241"></status>
+</kw>
+<kw name="Should Be Equal As Numbers" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<arguments>
+<arg>${orderStatus.json()["total_price"]}</arg>
+<arg>${total_price}</arg>
+</arguments>
+<msg timestamp="20201023 17:06:21.242" level="INFO">Argument types are:
+&lt;class 'float'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20201023 17:06:21.241" endtime="20201023 17:06:21.242"></status>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<arguments>
+<arg>${order_id}</arg>
+<arg>${orderStatus.json()["order_id"]}</arg>
+</arguments>
+<msg timestamp="20201023 17:06:21.243" level="INFO">${order_id} = 8004359104</msg>
+<status status="PASS" starttime="20201023 17:06:21.242" endtime="20201023 17:06:21.243"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.229" endtime="20201023 17:06:21.243"></status>
+</kw>
+<kw name="Confirm Payment">
+<arguments>
+<arg>${total_price}</arg>
+<arg>${notify_message}</arg>
+</arguments>
+<kw name="Replace Variables" library="BuiltIn">
+<doc>Replaces variables in the given text with their current values.</doc>
+<arguments>
+<arg>${notify_message}</arg>
+</arguments>
+<assign>
+<var>${notify_message}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.244" level="INFO">${notify_message} = วันเวลาที่ชำระเงิน 1/3/2020 13:30:00 หมายเลขคำสั่งซื้อ 8004359104 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข 1785261900</msg>
+<status status="PASS" starttime="20201023 17:06:21.243" endtime="20201023 17:06:21.244"></status>
+</kw>
+<kw name="Replace Variables" library="BuiltIn">
+<doc>Replaces variables in the given text with their current values.</doc>
+<arguments>
+<arg>${CONFIRM_PAYMENT_TEMPLATE}</arg>
+</arguments>
+<assign>
+<var>${message}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.244" level="INFO">${message} = { "order_id": 8004359104, "payment_type": "credit", "type": "visa", "card_number": "4719700591590995", "cvv": "752", "expired_month": 7, "expired_year": 20, "card_name": "Karnwat Wongudom", "total_pri...</msg>
+<status status="PASS" starttime="20201023 17:06:21.244" endtime="20201023 17:06:21.244"></status>
+</kw>
+<kw name="To Json" library="RequestsLibrary">
+<doc>Convert a string to a JSON object</doc>
+<arguments>
+<arg>${message}</arg>
+</arguments>
+<assign>
+<var>${confirmPayment}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.244" level="INFO">To JSON using : content={ "order_id": 8004359104, "payment_type": "credit", "type": "visa", "card_number": "4719700591590995", "cvv": "752", "expired_month": 7, "expired_year": 20, "card_name": "Karnwat Wongudom", "total_price": 14.95 } </msg>
+<msg timestamp="20201023 17:06:21.244" level="INFO">To JSON using : pretty_print=False </msg>
+<msg timestamp="20201023 17:06:21.245" level="INFO">${confirmPayment} = {'order_id': 8004359104, 'payment_type': 'credit', 'type': 'visa', 'card_number': '4719700591590995', 'cvv': '752', 'expired_month': 7, 'expired_year': 20, 'card_name': 'Karnwat Wongudom', 'total_pric...</msg>
+<status status="PASS" starttime="20201023 17:06:21.244" endtime="20201023 17:06:21.245"></status>
+</kw>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>${toy_store}</arg>
+<arg>/api/v1/confirmPayment</arg>
+<arg>json=${confirmPayment}</arg>
+<arg>headers=&amp;{POST_HEADERS}</arg>
+</arguments>
+<assign>
+<var>${confirmPaymentStatus}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.400" level="INFO">POST Request : url=http://localhost:8000/api/v1/confirmPayment 
+ path_url=/api/v1/confirmPayment 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '210'} 
+ body=b'{"order_id": 8004359104, "payment_type": "credit", "type": "visa", "card_number": "4719700591590995", "cvv": "752", "expired_month": 7, "expired_year": 20, "card_name": "Karnwat Wongudom", "total_price": 14.95}' 
+ </msg>
+<msg timestamp="20201023 17:06:21.400" level="INFO">POST Response : url=http://localhost:8000/api/v1/confirmPayment 
+ status=200, reason=OK 
+ body={"notify_message":"วันเวลาที่ชำระเงิน 1/3/2020 13:30:00 หมายเลขคำสั่งซื้อ 8004359104 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข 1785261900"}
+ 
+ </msg>
+<msg timestamp="20201023 17:06:21.401" level="INFO">${confirmPaymentStatus} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20201023 17:06:21.245" endtime="20201023 17:06:21.401"></status>
+</kw>
+<kw name="Request Should Be Successful" library="RequestsLibrary">
+<doc>Fails if response status code is a client or server error (4xx, 5xx).</doc>
+<arguments>
+<arg>${confirmPaymentStatus}</arg>
+</arguments>
+<status status="PASS" starttime="20201023 17:06:21.401" endtime="20201023 17:06:21.401"></status>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${confirmPaymentStatus.json()["notify_message"]}</arg>
+<arg>${notify_message}</arg>
+</arguments>
+<status status="PASS" starttime="20201023 17:06:21.401" endtime="20201023 17:06:21.402"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.243" endtime="20201023 17:06:21.402"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.193" endtime="20201023 17:06:21.402"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.193" endtime="20201023 17:06:21.402" critical="yes"></status>
+</test>
+<test id="s1-s1-t2" name="Bicycle">
+<kw name="Checkout Product">
+<arguments>
+<arg>Balance Training Bicycle</arg>
+<arg>2</arg>
+<arg>241.90</arg>
+<arg>วันเวลาที่ชำระเงิน 1/3/2020 13:30:00 หมายเลขคำสั่งซื้อ \${order_id} คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข 1785261900</arg>
+</arguments>
+<kw name="Get Product List">
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>${toy_store}</arg>
+<arg>/mockTime/01032020T13:30:00</arg>
+</arguments>
+<msg timestamp="20201023 17:06:21.408" level="INFO">GET Request : url=http://localhost:8000/mockTime/01032020T13:30:00 
+ path_url=/mockTime/01032020T13:30:00 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20201023 17:06:21.408" level="INFO">GET Response : url=http://localhost:8000/mockTime/01032020T13:30:00 
+ status=200, reason=OK 
+ body={"fixTime":"2020-03-01T13:30:00Z","status":"ok"}
+ 
+ </msg>
+<status status="PASS" starttime="20201023 17:06:21.404" endtime="20201023 17:06:21.408"></status>
+</kw>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>${toy_store}</arg>
+<arg>/api/v1/product</arg>
+<arg>headers=&amp;{ACCEPT}</arg>
+</arguments>
+<assign>
+<var>${productList}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.413" level="INFO">GET Request : url=http://localhost:8000/api/v1/product 
+ path_url=/api/v1/product 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20201023 17:06:21.413" level="INFO">GET Response : url=http://localhost:8000/api/v1/product 
+ status=200, reason=OK 
+ body={"total":2,"products":[{"id":1,"product_name":"Balance Training Bicycle","product_price":119.95,"product_image":"/Balance_Training_Bicycle.png"},{"id":2,"product_name":"43 Piece dinner Set","product_price":12.95,"product_image":"/43_Piece_dinner_Set.png"}]}
+ 
+ </msg>
+<msg timestamp="20201023 17:06:21.413" level="INFO">${productList} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20201023 17:06:21.408" endtime="20201023 17:06:21.413"></status>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<doc>Fails if response status code is different than the expected.</doc>
+<arguments>
+<arg>200</arg>
+<arg>${productList}</arg>
+</arguments>
+<status status="PASS" starttime="20201023 17:06:21.414" endtime="20201023 17:06:21.414"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${productList.json()["total"]}</arg>
+<arg>${2}</arg>
+</arguments>
+<status status="PASS" starttime="20201023 17:06:21.414" endtime="20201023 17:06:21.414"></status>
+</kw>
+<kw name="Get From Dictionary" library="Collections">
+<doc>Returns a value from the given ``dictionary`` based on the given ``key``.</doc>
+<arguments>
+<arg>${productList.json()}</arg>
+<arg>products</arg>
+</arguments>
+<assign>
+<var>${products}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.415" level="INFO">${products} = [{'id': 1, 'product_name': 'Balance Training Bicycle', 'product_price': 119.95, 'product_image': '/Balance_Training_Bicycle.png'}, {'id': 2, 'product_name': '43 Piece dinner Set', 'product_price': 12....</msg>
+<status status="PASS" starttime="20201023 17:06:21.415" endtime="20201023 17:06:21.415"></status>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<arguments>
+<arg>${products}</arg>
+<arg>${products}</arg>
+</arguments>
+<msg timestamp="20201023 17:06:21.415" level="INFO">${products} = [{'id': 1, 'product_name': 'Balance Training Bicycle', 'product_price': 119.95, 'product_image': '/Balance_Training_Bicycle.png'}, {'id': 2, 'product_name': '43 Piece dinner Set', 'product_price': 12....</msg>
+<status status="PASS" starttime="20201023 17:06:21.415" endtime="20201023 17:06:21.416"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.403" endtime="20201023 17:06:21.416"></status>
+</kw>
+<kw name="Find Product by Name">
+<arguments>
+<arg>${product_name}</arg>
+</arguments>
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${0}</arg>
+</arguments>
+<assign>
+<var>${id}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.416" level="INFO">${id} = 0</msg>
+<status status="PASS" starttime="20201023 17:06:21.416" endtime="20201023 17:06:21.416"></status>
+</kw>
+<kw name="${product} IN [ @{products} ]" type="for">
+<kw name="${product} = {'id': 1, 'product_name': 'Balance Training Bicycle', 'product_price': 119.95, 'product_image': '/Balance_Training_Bicycle.png'}" type="foritem">
+<kw name="Set Variable" library="BuiltIn">
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<arguments>
+<arg>${product["id"]}</arg>
+</arguments>
+<assign>
+<var>${id}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.417" level="INFO">${id} = 1</msg>
+<status status="PASS" starttime="20201023 17:06:21.417" endtime="20201023 17:06:21.417"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${product["product_name"]}' == '${product_name}'</arg>
+<arg>Exit For Loop</arg>
+</arguments>
+<kw name="Exit For Loop" library="BuiltIn">
+<doc>Stops executing the enclosing for loop.</doc>
+<msg timestamp="20201023 17:06:21.418" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20201023 17:06:21.418" endtime="20201023 17:06:21.418"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.417" endtime="20201023 17:06:21.418"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.417" endtime="20201023 17:06:21.418"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.416" endtime="20201023 17:06:21.418"></status>
+</kw>
+<kw name="Should Be True" library="BuiltIn">
+<doc>Fails if the given condition is not true.</doc>
+<arguments>
+<arg>${id} != 0</arg>
+<arg>product id should not equal 0</arg>
+</arguments>
+<status status="PASS" starttime="20201023 17:06:21.418" endtime="20201023 17:06:21.418"></status>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<arguments>
+<arg>${product_id}</arg>
+<arg>${id}</arg>
+</arguments>
+<msg timestamp="20201023 17:06:21.419" level="INFO">${product_id} = 1</msg>
+<status status="PASS" starttime="20201023 17:06:21.418" endtime="20201023 17:06:21.419"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.416" endtime="20201023 17:06:21.420"></status>
+</kw>
+<kw name="Get Product Detail">
+<arguments>
+<arg>${product_name}</arg>
+</arguments>
+<kw name="Get Request" library="RequestsLibrary">
+<doc>Send a GET request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>${toy_store}</arg>
+<arg>/api/v1/product/${product_id}</arg>
+<arg>headers=&amp;{ACCEPT}</arg>
+</arguments>
+<assign>
+<var>${productDetail}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.425" level="INFO">GET Request : url=http://localhost:8000/api/v1/product/1 
+ path_url=/api/v1/product/1 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg timestamp="20201023 17:06:21.425" level="INFO">GET Response : url=http://localhost:8000/api/v1/product/1 
+ status=200, reason=OK 
+ body={"id":1,"product_name":"Balance Training Bicycle","product_price":119.95,"product_image":"/Balance_Training_Bicycle.png","quantity":5,"product_brand":"SportsFun"}
+ 
+ </msg>
+<msg timestamp="20201023 17:06:21.425" level="INFO">${productDetail} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20201023 17:06:21.420" endtime="20201023 17:06:21.425"></status>
+</kw>
+<kw name="Request Should Be Successful" library="RequestsLibrary">
+<doc>Fails if response status code is a client or server error (4xx, 5xx).</doc>
+<arguments>
+<arg>${productDetail}</arg>
+</arguments>
+<status status="PASS" starttime="20201023 17:06:21.425" endtime="20201023 17:06:21.425"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${productDetail.json()["product_name"]}</arg>
+<arg>${product_name}</arg>
+</arguments>
+<status status="PASS" starttime="20201023 17:06:21.426" endtime="20201023 17:06:21.426"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.420" endtime="20201023 17:06:21.426"></status>
+</kw>
+<kw name="Order Product">
+<arguments>
+<arg>${quantity}</arg>
+<arg>${total_price}</arg>
+</arguments>
+<kw name="Replace Variables" library="BuiltIn">
+<doc>Replaces variables in the given text with their current values.</doc>
+<arguments>
+<arg>${ORDER_TEMPLATE}</arg>
+</arguments>
+<assign>
+<var>${message}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.427" level="INFO">${message} = { "cart":[{ "product_id": 1, "quantity": 2 }], "shipping_method": "Kerry", "shipping_address": "405/37 ถ.มหิดล", "shipping_sub_district": "ท่าศาลา", "shipping_district": "เมือง", "shipping_province": ...</msg>
+<status status="PASS" starttime="20201023 17:06:21.427" endtime="20201023 17:06:21.427"></status>
+</kw>
+<kw name="To Json" library="RequestsLibrary">
+<doc>Convert a string to a JSON object</doc>
+<arguments>
+<arg>${message}</arg>
+</arguments>
+<assign>
+<var>${order}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.427" level="INFO">To JSON using : content={ "cart":[{ "product_id": 1, "quantity": 2 }], "shipping_method": "Kerry", "shipping_address": "405/37 ถ.มหิดล", "shipping_sub_district": "ท่าศาลา", "shipping_district": "เมือง", "shipping_province": "เชียงใหม่", "shipping_zip_code": "50000", "recipient_name": "ณัฐญา ชุติบุตร", "recipient_phone_number": "0970809292" } </msg>
+<msg timestamp="20201023 17:06:21.427" level="INFO">To JSON using : pretty_print=False </msg>
+<msg timestamp="20201023 17:06:21.427" level="INFO">${order} = {'cart': [{'product_id': 1, 'quantity': 2}], 'shipping_method': 'Kerry', 'shipping_address': '405/37 ถ.มหิดล', 'shipping_sub_district': 'ท่าศาลา', 'shipping_district': 'เมือง', 'shipping_province': 'เ...</msg>
+<status status="PASS" starttime="20201023 17:06:21.427" endtime="20201023 17:06:21.428"></status>
+</kw>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>${toy_store}</arg>
+<arg>/api/v1/order</arg>
+<arg>json=${order}</arg>
+<arg>headers=&amp;{POST_HEADERS}</arg>
+</arguments>
+<assign>
+<var>${orderStatus}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.438" level="INFO">POST Request : url=http://localhost:8000/api/v1/order 
+ path_url=/api/v1/order 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '516'} 
+ body=b'{"cart": [{"product_id": 1, "quantity": 2}], "shipping_method": "Kerry", "shipping_address": "405/37 \\u0e16.\\u0e21\\u0e2b\\u0e34\\u0e14\\u0e25", "shipping_sub_district": "\\u0e17\\u0e48\\u0e32\\u0e28\\u0e32\\u0e25\\u0e32", "shipping_district": "\\u0e40\\u0e21\\u0e37\\u0e2d\\u0e07", "shipping_province": "\\u0e40\\u0e0a\\u0e35\\u0e22\\u0e07\\u0e43\\u0e2b\\u0e21\\u0e48", "shipping_zip_code": "50000", "recipient_name": "\\u0e13\\u0e31\\u0e10\\u0e0d\\u0e32 \\u0e0a\\u0e38\\u0e15\\u0e34\\u0e1a\\u0e38\\u0e15\\u0e23", "recipient_phone_number": "0970809292"}' 
+ </msg>
+<msg timestamp="20201023 17:06:21.438" level="INFO">POST Response : url=http://localhost:8000/api/v1/order 
+ status=200, reason=OK 
+ body={"order_id":8004359105,"total_price":241.9}
+ 
+ </msg>
+<msg timestamp="20201023 17:06:21.438" level="INFO">${orderStatus} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20201023 17:06:21.428" endtime="20201023 17:06:21.438"></status>
+</kw>
+<kw name="Status Should Be" library="RequestsLibrary">
+<doc>Fails if response status code is different than the expected.</doc>
+<arguments>
+<arg>200</arg>
+<arg>${orderStatus}</arg>
+</arguments>
+<status status="PASS" starttime="20201023 17:06:21.438" endtime="20201023 17:06:21.439"></status>
+</kw>
+<kw name="Should Be Equal As Numbers" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<arguments>
+<arg>${orderStatus.json()["total_price"]}</arg>
+<arg>${total_price}</arg>
+</arguments>
+<msg timestamp="20201023 17:06:21.439" level="INFO">Argument types are:
+&lt;class 'float'&gt;
+&lt;type 'unicode'&gt;</msg>
+<status status="PASS" starttime="20201023 17:06:21.439" endtime="20201023 17:06:21.439"></status>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<arguments>
+<arg>${order_id}</arg>
+<arg>${orderStatus.json()["order_id"]}</arg>
+</arguments>
+<msg timestamp="20201023 17:06:21.440" level="INFO">${order_id} = 8004359105</msg>
+<status status="PASS" starttime="20201023 17:06:21.439" endtime="20201023 17:06:21.440"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.426" endtime="20201023 17:06:21.440"></status>
+</kw>
+<kw name="Confirm Payment">
+<arguments>
+<arg>${total_price}</arg>
+<arg>${notify_message}</arg>
+</arguments>
+<kw name="Replace Variables" library="BuiltIn">
+<doc>Replaces variables in the given text with their current values.</doc>
+<arguments>
+<arg>${notify_message}</arg>
+</arguments>
+<assign>
+<var>${notify_message}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.441" level="INFO">${notify_message} = วันเวลาที่ชำระเงิน 1/3/2020 13:30:00 หมายเลขคำสั่งซื้อ 8004359105 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข 1785261900</msg>
+<status status="PASS" starttime="20201023 17:06:21.441" endtime="20201023 17:06:21.441"></status>
+</kw>
+<kw name="Replace Variables" library="BuiltIn">
+<doc>Replaces variables in the given text with their current values.</doc>
+<arguments>
+<arg>${CONFIRM_PAYMENT_TEMPLATE}</arg>
+</arguments>
+<assign>
+<var>${message}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.442" level="INFO">${message} = { "order_id": 8004359105, "payment_type": "credit", "type": "visa", "card_number": "4719700591590995", "cvv": "752", "expired_month": 7, "expired_year": 20, "card_name": "Karnwat Wongudom", "total_pri...</msg>
+<status status="PASS" starttime="20201023 17:06:21.441" endtime="20201023 17:06:21.442"></status>
+</kw>
+<kw name="To Json" library="RequestsLibrary">
+<doc>Convert a string to a JSON object</doc>
+<arguments>
+<arg>${message}</arg>
+</arguments>
+<assign>
+<var>${confirmPayment}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.442" level="INFO">To JSON using : content={ "order_id": 8004359105, "payment_type": "credit", "type": "visa", "card_number": "4719700591590995", "cvv": "752", "expired_month": 7, "expired_year": 20, "card_name": "Karnwat Wongudom", "total_price": 241.90 } </msg>
+<msg timestamp="20201023 17:06:21.442" level="INFO">To JSON using : pretty_print=False </msg>
+<msg timestamp="20201023 17:06:21.442" level="INFO">${confirmPayment} = {'order_id': 8004359105, 'payment_type': 'credit', 'type': 'visa', 'card_number': '4719700591590995', 'cvv': '752', 'expired_month': 7, 'expired_year': 20, 'card_name': 'Karnwat Wongudom', 'total_pric...</msg>
+<status status="PASS" starttime="20201023 17:06:21.442" endtime="20201023 17:06:21.442"></status>
+</kw>
+<kw name="Post Request" library="RequestsLibrary">
+<doc>Send a POST request on the session object found using the
+given `alias`</doc>
+<arguments>
+<arg>${toy_store}</arg>
+<arg>/api/v1/confirmPayment</arg>
+<arg>json=${confirmPayment}</arg>
+<arg>headers=&amp;{POST_HEADERS}</arg>
+</arguments>
+<assign>
+<var>${confirmPaymentStatus}</var>
+</assign>
+<msg timestamp="20201023 17:06:21.467" level="INFO">POST Request : url=http://localhost:8000/api/v1/confirmPayment 
+ path_url=/api/v1/confirmPayment 
+ headers={'User-Agent': 'python-requests/2.24.0', 'Accept-Encoding': 'gzip, deflate', 'Accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '210'} 
+ body=b'{"order_id": 8004359105, "payment_type": "credit", "type": "visa", "card_number": "4719700591590995", "cvv": "752", "expired_month": 7, "expired_year": 20, "card_name": "Karnwat Wongudom", "total_price": 241.9}' 
+ </msg>
+<msg timestamp="20201023 17:06:21.467" level="INFO">POST Response : url=http://localhost:8000/api/v1/confirmPayment 
+ status=200, reason=OK 
+ body={"notify_message":"วันเวลาที่ชำระเงิน 1/3/2020 13:30:00 หมายเลขคำสั่งซื้อ 8004359105 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข 1785261900"}
+ 
+ </msg>
+<msg timestamp="20201023 17:06:21.467" level="INFO">${confirmPaymentStatus} = &lt;Response [200]&gt;</msg>
+<status status="PASS" starttime="20201023 17:06:21.442" endtime="20201023 17:06:21.467"></status>
+</kw>
+<kw name="Request Should Be Successful" library="RequestsLibrary">
+<doc>Fails if response status code is a client or server error (4xx, 5xx).</doc>
+<arguments>
+<arg>${confirmPaymentStatus}</arg>
+</arguments>
+<status status="PASS" starttime="20201023 17:06:21.468" endtime="20201023 17:06:21.468"></status>
+</kw>
+<kw name="Should Be Equal As Strings" library="BuiltIn">
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<arguments>
+<arg>${confirmPaymentStatus.json()["notify_message"]}</arg>
+<arg>${notify_message}</arg>
+</arguments>
+<status status="PASS" starttime="20201023 17:06:21.468" endtime="20201023 17:06:21.468"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.440" endtime="20201023 17:06:21.468"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.403" endtime="20201023 17:06:21.469"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.402" endtime="20201023 17:06:21.469" critical="yes"></status>
+</test>
+<kw name="Delete All Sessions" library="RequestsLibrary" type="teardown">
+<doc>Removes all the session objects</doc>
+<msg timestamp="20201023 17:06:21.469" level="INFO">Delete All Sessions</msg>
+<status status="PASS" starttime="20201023 17:06:21.469" endtime="20201023 17:06:21.469"></status>
+</kw>
+<status status="PASS" starttime="20201023 17:06:21.131" endtime="20201023 17:06:21.469"></status>
+</suite>
+<status status="PASS" starttime="20201023 17:06:21.114" endtime="20201023 17:06:21.470"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="0">Critical Tests</stat>
+<stat pass="2" fail="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="2" fail="0" id="s1" name="Api-Test">Api-Test</stat>
+<stat pass="2" fail="0" id="s1-s1" name="Checkout-Success-Template">Api-Test.Checkout-Success-Template</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

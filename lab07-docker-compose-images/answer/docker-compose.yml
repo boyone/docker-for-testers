@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+  store-service:
+    image: boyone/toy-store-service:0.0.1
+    container_name: store-service
+    ports:
+      - "8000:8000"
+    depends_on:
+      - store-database
+    restart: always
+    environment: 
+      - TEST_MODE=true
+      - BANK_GATEWAY=bank-gateway:8882
+      - SHIPPING_GATEWAY=shipping-gateway:8882
+      - DBCONNECTION=sealteam:sckshuhari@(store-database:3306)/toy
+
+  store-database:
+    image: mysql:5.7
+    container_name: store-database
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=sealteam
+      - MYSQL_PASSWORD=sckshuhari
+      - MYSQL_DATABASE=toy
+    volumes:
+      - ./tearup/:/docker-entrypoint-initdb.d/
+    ports:
+      - "3306:3306"
+
+  store-nginx:
+    image: nginx:1.19.3-alpine
+    container_name: store-nginx
+    restart: always
+    volumes:
+        - ./out:/etc/nginx/html:ro
+        - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - store-service
+    ports:
+      - "80:80"
+
+  bank-gateway:
+    image: sckseal/toy-store-bankgateway:0.0.1
+    container_name: bank-gateway
+    restart: always
+    # ports:
+    #   - "8882:8882"
+
+  shipping-gateway:
+    image: sckseal/toy-store-shippinggateway:0.0.1
+    container_name: shipping-gateway
+    restart: always
+    # ports:
+    #   - "8883:8882"

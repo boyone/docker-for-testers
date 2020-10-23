@@ -1,0 +1,439 @@
+{
+  "port": 8000,
+  "protocol": "http",
+  "defaultResponse": {
+    "statusCode": 400,
+    "headers": {
+      "Connection": "Keep-Alive",
+      "Content-Length": 0
+    }
+  },
+  "stubs": [
+    {
+      "name": "product list json",
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/v1/product",
+            "headers": {
+              "Accept": "application/json"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "body": "<%- stringify('./product-list.json') %>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "product list xml",
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/v1/product",
+            "headers": {
+              "Accept": "text/xml"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "text/xml; charset=utf-8"
+            },
+            "body": "<%- stringify('./product-list.xml') %>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "bicycle detail json",
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/v1/product/1",
+            "headers": {
+              "Accept": "application/json"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "body": "<%- stringify('./bicycle.json') %>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "diner set detail json",
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/v1/product/2",
+            "headers": {
+              "Accept": "application/json"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "body": "<%- stringify('./diner-set.json') %>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "bicycle detail xml",
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/v1/product/1",
+            "headers": {
+              "Accept": "text/xml"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "text/xml; charset=utf-8"
+            },
+            "body": "<%- stringify('./bicycle.xml') %>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "diner set detail xml",
+      "predicates": [
+        {
+          "equals": {
+            "method": "GET",
+            "path": "/api/v1/product/2",
+            "headers": {
+              "Accept": "text/xml"
+            }
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "text/xml; charset=utf-8"
+            },
+            "body": "<%- stringify('./diner-set.xml') %>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "order diner set json",
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/v1/order",
+            "headers": {
+              "Content-Type": "application/json"
+            }
+          }
+        },
+        {
+          "equals": { "body": 2  },
+          "jsonpath": { "selector": "$.cart[0].product_id" },
+          "caseSensitive": true
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "order_id": 8004359122,
+              "total_price": 14.95
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "order bicycle json",
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/v1/order",
+            "headers": {
+              "Content-Type": "application/json"
+            }
+          }
+        },
+        {
+          "equals": { "body": 1 },
+          "jsonpath": { "selector": "$.cart[0].product_id" },
+          "caseSensitive": true
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "order_id": 8004359105,
+              "total_price": "241.90"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "order diner set xml",
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/v1/order",
+            "headers": {
+              "Accept": "text/xml",
+              "Content-Type": "text/xml"
+            }
+          }
+        },
+        {
+          "equals": { "body": 2 },
+          "xpath": { "selector": "/orders/cart/order/product_id" },
+          "caseSensitive": true
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "text/xml; charset=utf-8"
+            },
+            "body": "<order><order_id>8004359122</order_id><total_price>14.95</total_price></order>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "order bicycle xml",
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/v1/order",
+            "headers": {
+              "Accept": "text/xml",
+              "Content-Type": "text/xml"
+            }
+          }
+        },
+        {
+          "equals": { "body": 1 },
+          "xpath": { "selector": "/orders/cart/order/product_id" },
+          "caseSensitive": true
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "text/xml; charset=utf-8"
+            },
+            "body": "<order><order_id>8004359105</order_id><total_price>241.90</total_price></order>"
+          }
+        }
+      ]
+    },
+    {
+      "name": "diner set confirm payment json",
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/v1/confirmPayment",
+            "headers": {
+              "Content-Type": "application/json"
+            }
+          }
+        },
+        {
+          "equals": { "body": 8004359122 },
+          "jsonpath": { "selector": "$.order_id" },
+          "caseSensitive": true
+        },
+        {
+          "equals": { "body": 14.95 },
+          "jsonpath": { "selector": "$.total_price" },
+          "caseSensitive": true
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "notify_message": "วันเวลาที่ชำระเงิน 1/3/2020 13:30:00 หมายเลขคำสั่งซื้อ 8004359122 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข 1785261900"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "bicycle confirm payment json",
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/v1/confirmPayment",
+            "headers": {
+              "Content-Type": "application/json"
+            }
+          }
+        },
+        {
+          "equals": { "body": 8004359105 },
+          "jsonpath": { "selector": "$.order_id" },
+          "caseSensitive": true
+        },
+        {
+          "equals": { "body": 241.90 },
+          "jsonpath": { "selector": "$.total_price" },
+          "caseSensitive": true
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json; charset=utf-8"
+            },
+            "body": {
+              "notify_message": "วันเวลาที่ชำระเงิน 1/3/2020 13:30:00 หมายเลขคำสั่งซื้อ 8004359105 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข 1785261901"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "diner set confirm payment xml",
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/v1/confirmPayment",
+            "headers": {
+              "Accept": "text/xml",
+              "Content-Type": "text/xml"
+            }
+          }
+        },
+        {
+          "equals": { "body": 8004359122 },
+          "xpath": { "selector": "/confirm-payment/order_id" },
+          "caseSensitive": true
+        },
+        {
+          "equals": { "body": 14.95 },
+          "xpath": { "selector": "/confirm-payment/total_price" },
+          "caseSensitive": true
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "text/xml; charset=utf-8"
+            },
+            "body": "<notify_message>วันเวลาที่ชำระเงิน 1/3/2020 13:30:00 หมายเลขคำสั่งซื้อ 8004359122 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข 1785261900</notify_message>"
+            
+          }
+        }
+      ]
+    },
+    {
+      "name": "bicycle confirm payment xml",
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/api/v1/confirmPayment",
+            "headers": {
+              "Accept": "text/xml",
+              "Content-Type": "text/xml"
+            }
+          }
+        },
+        {
+          "equals": { "body": 8004359105 },
+          "xpath": { "selector": "/confirm-payment/order_id" },
+          "caseSensitive": true
+        },
+        {
+          "equals": { "body": "241.90" },
+          "xpath": { "selector": "/confirm-payment/total_price" },
+          "caseSensitive": true
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "text/xml; charset=utf-8"
+            },
+            "body": "<notify_message>วันเวลาที่ชำระเงิน 1/3/2020 13:30:00 หมายเลขคำสั่งซื้อ 8004359105 คุณสามารถติดตามสินค้าผ่านช่องทาง Kerry หมายเลข 1785261901</notify_message>"
+            
+          }
+        }
+      ]
+    }
+  ]
+}

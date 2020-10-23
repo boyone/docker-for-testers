@@ -125,7 +125,7 @@
    - ENV(Configuration)
    - Volume(Storage)
 4. Lab on local machine (Running with Docker compose)
-   > lab 07. shopping cart **_images_**
+   > [lab 07. shopping cart **_images_**](lab07-docker-compose-images/README.md)
    - Run Docker compose
    - Docker compose commands
    - Docker compose file
