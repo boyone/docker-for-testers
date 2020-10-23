@@ -117,7 +117,7 @@
 1. Study the web application architecture
 2. Analysis and design how to use docker
 3. Define the implementation steps of using docker
-   > lab 06. Things You Should Know From Dockerfile, Docker Image to docker-compose
+   > [lab 06. From Dockerfile, Docker Image to docker-compose](lab06-docker-compose-and-Dockerfile/README.md)
    - Build Steps: Go, Node.js
    - Hello(Go) API v.2, Time(Node.js) API, and Mysql
    - HTTP

@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  hello-world-api:
+    image: hello-world-api:0.0.1
+    container_name: hello-world-api
+    build:
+      context: helloworld
+      dockerfile: Dockerfile
+    environment:
+      TIME_SERVER: time-api:8000
+      DB_SERVER: db:3306
+      DB_USER: root
+      DB_PASSWORD: password
+    ports:
+      - '8080:8080'
+  
+  db:
+    image: mysql:8.0.22
+    container_name: hello-world-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: helloworld
+    ports:
+        - '3306:3306'
+    volumes:
+        - ./db/:/docker-entrypoint-initdb.d/
+
+  time-api:
+    image: time-api:0.0.1
+    container_name: time-api
+    build:
+      context: time
+      dockerfile: Dockerfile
+    environment:
+      PORT: 8000
+    ports:
+      - '8000:8000'
