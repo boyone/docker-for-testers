@@ -61,3 +61,9 @@ docker container run <name>/hello-world:0.0.3
 ```sh
 docker image push <name>/hello-world:0.0.3
 ```
+
+## Tag latest
+
+```sh
+docker image tag boyone/hello-world:0.0.2 boyone/hello-world:latest
+```
