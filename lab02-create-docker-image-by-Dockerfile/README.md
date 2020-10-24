@@ -2,10 +2,10 @@
 
 Dockerfile is a text file that contains instructions for building an image.
 
-## Build image with Dockerfile Tag 0.0.2
+## Build image with Dockerfile Tag 0.0.3
 
 ```sh
-docker build -t <name>/hello-world:0.0.2
+docker build -t <name>/hello-world:0.0.3
 ```
 
 ```sh
@@ -24,10 +24,10 @@ COPY --from=builder /go/src/app/hello .
 CMD ["./hello"]
 ```
 
-## Run Your Own Image Tag 0.0.2
+## Run Your Own Image Tag 0.0.3
 
 ```sh
-docker container run <name>/hello-world:0.0.2
+docker container run <name>/hello-world:0.0.3
 ```
 
 ## Modify hello-world
@@ -44,26 +44,27 @@ docker container run <name>/hello-world:0.0.2
 fmt.Println("Hello, World!", time.Now())
 ```
 
-## Build image with Dockerfile Tag 0.0.3
+## Build image with Dockerfile Tag 0.0.4
 
 ```sh
-docker build -t <name>/hello-world:0.0.3
+docker build -t <name>/hello-world:0.0.4
 ```
 
-## Run Your Own Image Tag 0.0.3
+## Run Your Own Image Tag 0.0.4
 
 ```sh
-docker container run <name>/hello-world:0.0.3
+docker container run <name>/hello-world:0.0.4
 ```
 
 ## Push Your Image
 
 ```sh
-docker image push <name>/hello-world:0.0.3
+docker image push <name>/hello-world:0.0.4
 ```
 
 ## Tag latest
 
+> docker image tag <name>/hello-world:0.0.4 <name>/hello-world:latest
 ```sh
-docker image tag boyone/hello-world:0.0.2 boyone/hello-world:latest
+docker image tag boyone/hello-world:0.0.4 boyone/hello-world:latest
 ```
