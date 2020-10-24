@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  stub-service:
+    image: andyrbell/mountebank:2.3.2
+    volumes:
+      - ./imposters.json:/imposters/imposters.json
+    ports:
+      - '2525:2525'
+      - '80:80'
+    command:
+      [
+        'mb',
+        'start',
+        '--configfile',
+        '/imposters/imposters.json',
+        '--allowInjection',
+      ]
