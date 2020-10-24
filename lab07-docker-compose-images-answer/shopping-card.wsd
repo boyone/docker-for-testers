@@ -1,0 +1,25 @@
+@startuml
+rectangle nginx {
+    rectangle "store-web"
+}
+
+rectangle service [
+    store-service
+]
+
+storage cache [
+    store-cache
+]
+
+database database [
+    store-database
+]
+
+rectangle bank [
+    bank-gateway
+]
+
+rectangle shipping [
+    shipping-gateway
+]
+@enduml
