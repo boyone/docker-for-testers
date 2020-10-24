@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   hello-world-api:
-    image: hello-world-api:0.0.1
+    image: hello-world-api:0.0.2
     container_name: hello-world-api
     build:
       context: helloworld
@@ -25,10 +25,10 @@ services:
     ports:
         - '3306:3306'
     volumes:
-        - ./db/:/docker-entrypoint-initdb.d/
+        - ./db-with-init-data/:/docker-entrypoint-initdb.d/
 
   time-api:
-    image: time-api:0.0.1
+    image: time-api:0.0.2
     container_name: time-api
     build:
       context: time
