@@ -47,7 +47,7 @@ fmt.Println("Hello, World!", time.Now())
 ## Build image with Dockerfile Tag 0.0.4
 
 ```sh
-docker build -t <name>/hello-world:0.0.4
+docker build -t <name>/hello-world:0.0.4 .
 ```
 
 ## Run Your Own Image Tag 0.0.4

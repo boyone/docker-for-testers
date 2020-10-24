@@ -27,7 +27,7 @@ docker container run -p 2525:2525 -p 8000:8000 boyone/store-service-stub
 
 ## Create New Images
 
-## Run Plan Container with -v
+## Run Plain Container with -v
 
 ```sh
 docker container run -p 2525:2525 andyrbell/mountebank:2.3.2
