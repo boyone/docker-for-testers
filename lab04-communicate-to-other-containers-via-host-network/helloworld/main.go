@@ -21,7 +21,7 @@ func main() {
 	}
 
 	http.HandleFunc("/hello", func(w http.ResponseWriter, req *http.Request) {
-		fmt.Fprintf(w, fmt.Sprintf("Hello, World! %s", getTime(timeServer)))
+		fmt.Fprintf(w, fmt.Sprintf("Hello, World! %s\n", getTime(timeServer)))
 	})
 
 	log.Fatal(http.ListenAndServe(port, nil))
